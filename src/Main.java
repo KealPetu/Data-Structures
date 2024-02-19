@@ -1,4 +1,3 @@
-import java.awt.desktop.SystemEventListener;
 import java.util.Scanner;
 
 public class Main {
@@ -117,11 +116,23 @@ public class Main {
                 manipulateArray(sc, multiDimensionalArray);
                 break;
             case 4:
-                System.out.println(multiDimensionalArray.length);
+                printArray(multiDimensionalArray);
                 manipulateArray(sc, multiDimensionalArray);
                 break;
             default:
                 break;
+        }
+    }
+
+    private static void printArray(Object[][][] multiDimensionalArray) {
+        for (int i = 0; i < multiDimensionalArray.length; i++) {
+            for (int j = 0; j < multiDimensionalArray[i].length; j++) {
+                for (int k = 0; k < multiDimensionalArray[i][j].length; k++) {
+                    System.out.print("[" + multiDimensionalArray[i][j][k] + "] ");
+                }
+                System.out.println("\n");
+            }
+            System.out.println("\n");
         }
     }
 
@@ -153,11 +164,21 @@ public class Main {
                 manipulateArray(sc, biDimensionalArray);
                 break;
             case 4:
+                printArray(biDimensionalArray);
                 manipulateArray(sc, biDimensionalArray);
                 break;
             default:
                 manipulateArray(sc, biDimensionalArray);
                 break;
+        }
+    }
+
+    private static void printArray(Object[][] biDimensionalArray) {
+        for (int i = 0; i < biDimensionalArray.length; i++) {
+            for (int j = 0; j < biDimensionalArray[i].length; j++) {
+                System.out.print("[" + biDimensionalArray[i][j] + "] ");
+            }
+            System.out.println("\n");
         }
     }
 
@@ -189,11 +210,19 @@ public class Main {
                 manipulateArray(sc, oneDimensionalArray);
                 break;
             case 4:
+                printArray(oneDimensionalArray);
                 manipulateArray(sc, oneDimensionalArray);
                 break;
             default:
                 break;
         }
+    }
+
+    private static void printArray(Object[] oneDimensionalArray) {
+        for (int i = 0; i < oneDimensionalArray.length; i++) {
+            System.out.print("[" + oneDimensionalArray[i] + "] ");
+        }
+        System.out.println("\n");
     }
 
     private static void findItem(Object[] array, Object item){
@@ -206,17 +235,21 @@ public class Main {
                     System.out.println("item not found");
                 }
             } catch (NullPointerException e) {
-                System.out.println("Elemento vacio");
+                System.out.println("item not found");
             }
         }
     }
     private static void deleteItem(Object[] array, Object item){
         for (int i = 0; i < array.length; i++) {
-            if (array[i].equals(item)){
-                array[i] = null;
-                System.out.println("Item: " + item + " deleted");
-                return;
-            } else {
+            try {
+                if (array[i].equals(item)){
+                    array[i] = null;
+                    System.out.println("Item: " + item + " deleted");
+                    return;
+                } else {
+                    System.out.println("item not found");
+                }
+            } catch (NullPointerException e) {
                 System.out.println("item not found");
             }
         }
@@ -235,10 +268,14 @@ public class Main {
     private static void findItem(Object[][] array, Object item){
         for (int i = 0; i < array.length; i++) {
             for (int j = 0; j < array[i].length; j++) {
-                if (array[i][j].equals(item)){
-                    System.out.println("Item: " + item + ";Found at: [" + i + "][" + j + "]");
-                    return;
-                } else {
+                try {
+                    if (array[i][j].equals(item)){
+                        System.out.println("Item: " + item + ";Found at: [" + i + "][" + j + "]");
+                        return;
+                    } else {
+                        System.out.println("item not found");
+                    }
+                } catch (NullPointerException e) {
                     System.out.println("item not found");
                 }
             }
@@ -247,11 +284,15 @@ public class Main {
     private static void deleteItem(Object[][] array, Object item){
         for (int i = 0; i < array.length; i++) {
             for (int j = 0; j < array[i].length; j++) {
-                if (array[i][j].equals(item)){
-                    array[i][j] = null;
-                    System.out.println("Item: " + item + " deleted");
-                    return;
-                } else {
+                try {
+                    if (array[i][j].equals(item)){
+                        array[i][j] = null;
+                        System.out.println("Item: " + item + " deleted");
+                        return;
+                    } else {
+                        System.out.println("item not found");
+                    }
+                } catch (NullPointerException e) {
                     System.out.println("item not found");
                 }
             }
@@ -274,10 +315,14 @@ public class Main {
         for (int i = 0; i < array.length; i++) {
             for (int j = 0; j < array[i].length; j++) {
                 for (int k = 0; k < array[i][j].length; k++) {
-                    if (array[i][j][k].equals(item)){
-                        System.out.println("Item: " + item + ";Found at: [" + i + "][" + j + "][" + k + "]");
-                        return;
-                    } else {
+                    try {
+                        if (array[i][j][k].equals(item)){
+                            System.out.println("Item: " + item + ";Found at: [" + i + "][" + j + "][" + k + "]");
+                            return;
+                        } else {
+                            System.out.println("item not found");
+                        }
+                    } catch (NullPointerException e) {
                         System.out.println("item not found");
                     }
                 }
@@ -288,11 +333,15 @@ public class Main {
         for (int i = 0; i < array.length; i++) {
             for (int j = 0; j < array[i].length; j++) {
                 for (int k = 0; k < array[i][j].length; k++) {
-                    if (array[i][j][k].equals(item)){
-                        array[i][j][k] = null;
-                        System.out.println("Item: " + item + " deleted");
-                        return;
-                    } else {
+                    try {
+                        if (array[i][j][k].equals(item)){
+                            array[i][j][k] = null;
+                            System.out.println("Item: " + item + " deleted");
+                            return;
+                        } else {
+                            System.out.println("item not found");
+                        }
+                    } catch (NullPointerException e) {
                         System.out.println("item not found");
                     }
                 }
