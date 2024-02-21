@@ -1,23 +1,28 @@
 import javax.swing.*;
-import java.util.Scanner;
 
 public class SnS {
-    private Object array[];
-    private int arraySize;
+    private Object array[]; // Un array de tipo Object para almacenar los elementos.
+                            // Utilizar Object permite almacenar cualquier tipo de objeto.
+    private int arraySize; //Un entero que almacena el tamaño del array.
 
-    public SnS() {
+    public SnS() {          //Constructor de la clase.
+                            // Llama al método arrayCreation() para inicializar el array y
+                            // muestra el menú de opciones con showMenuOfOptions().
         arrayCreation();
         showMenuOfOptions();
     }
 
-    private void showMenuOfOptions() {
-        String option = JOptionPane.showInputDialog("\t||What do you wish to do?\n" +
+    private void showMenuOfOptions() {  //Muestra un menú de opciones mediante JOptionPane y ejecuta la
+                                        //acción correspondiente según la opción seleccionada por el usuario.
+        String option = JOptionPane.showInputDialog(
+                "\t||What do you wish to do?\n" +
                 "1. Enter an integer\n" +
-                "2. Minor bubble sorting\n" +
-                "3. Major bubble sorting\n" +
-                "4. Direct Selection\n" +
-                "5. Sequential Search\n" +
-                "6. Show Array\n" +
+                "2. Minor bubble sort\n" +
+                "3. Major bubble sort\n" +
+                "4. Direct Selection sort\n" +
+                "5. Insertion sort\n" +
+                "6. Sequential Search\n" +
+                "7. Show Array\n" +
                 "0. Go back\n" +
                 "Option: ");
 
@@ -42,10 +47,14 @@ public class SnS {
                 showMenuOfOptions();
                 break;
             case "5":
-                sequentialSearch();
+                insertionSort();
                 showMenuOfOptions();
                 break;
             case "6":
+                sequentialSearch();
+                showMenuOfOptions();
+                break;
+            case "7":
                 printArray();
                 showMenuOfOptions();
                 break;
@@ -55,10 +64,26 @@ public class SnS {
         }
     }
 
-    private void sequentialSearch() {
+    private void insertionSort() {  //El algoritmo de ordenación por inserción funciona construyendo una secuencia ordenada
+                                    // de elementos uno a uno tomando elementos de la lista y colocándolos en la posición correcta.
+        for (int i = 1; i < arraySize; i++) {
+            Object auxiliar = array[i];
+            int j = i - 1;
+
+            while (j >= 0 && (int)array[j] > (int)auxiliar) {
+                array[j + 1] = array[j];
+                j = j - 1;
+            }
+            array[j + 1] = auxiliar;
+            printArray();
+        }
+    }
+
+    private void sequentialSearch() {   //Realiza una búsqueda secuencial en el array para encontrar
+                                        //un valor ingresado por el usuario.
         int value2Find = Integer.parseInt(JOptionPane.showInputDialog("What value do you wish to find?")) ,
                 i = 1;
-        while ((i != arraySize) && ((int)array[i] != value2Find)){
+        while ((i <= arraySize) && ((int)array[i] != value2Find)){
             i++;
         }
         if (i > arraySize){
@@ -68,8 +93,9 @@ public class SnS {
         }
     }
 
-    private void directSelection() {
-        for (int i = 1; i != arraySize - 1; i++) {
+    private void directSelection() {    //Implementa el algoritmo de selección directa (direct selection).
+                                        // Ordena el array de manera ascendente.
+        for (int i = 1; i < arraySize - 1; i++) {
             int least = (int)array[i],
                     position = i;
             for (int j = i + 1; j != arraySize; j++) {
@@ -87,7 +113,8 @@ public class SnS {
         }
     }
 
-    private void majorBubbleSorting() {
+    private void majorBubbleSorting() { //Implementa el algoritmo de ordenación de burbuja (bubble sort)
+                                        //de manera ascendente.
         Object auxiliar;
         for (int i = 0; i != arraySize - 1; i++) {
             for (int j = 0; j != arraySize - 1; j++) {
@@ -101,7 +128,7 @@ public class SnS {
         }
     }
 
-    private void printArray() {
+    private void printArray() { //Imprime el contenido del array en una ventana de mensaje.
         String message = "";
         for (int i = 0; i < arraySize; i++) {
             message = message + "[" + array[i] + "] ";
@@ -109,7 +136,7 @@ public class SnS {
         JOptionPane.showMessageDialog(null, message);
     }
 
-    private void minorBubbleSorting() {
+    private void minorBubbleSorting() { //Implementa el algoritmo de ordenación de burbuja de manera descendente.
         Object auxiliar;
         for (int i = 0; i != arraySize - 1; i++) {
             for (int j = arraySize - 1; j != i; j--) {
@@ -123,7 +150,7 @@ public class SnS {
         }
     }
 
-    private void addValueToArray() {
+    private void addValueToArray() {    //Permite al usuario agregar un valor al array en la primera posición disponible.
         int value = Integer.parseInt(JOptionPane.showInputDialog("Enter the value: "));
         for (int i = 0; i < arraySize; i++) {
             if (array[i] == null){
@@ -134,7 +161,7 @@ public class SnS {
         }
     }
 
-    private void arrayCreation() {
+    private void arrayCreation() {  //Solicita al usuario el tamaño del array y lo inicializa.
         arraySize = Integer.parseInt(JOptionPane.showInputDialog("Enter the size of the array: "));
         array = new Object[arraySize];
     }
