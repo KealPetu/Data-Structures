@@ -2,8 +2,8 @@ import java.util.Scanner;
 
 public class MyArray {
     private Scanner sc;
-    public MyArray(Scanner sc) {
-        this.sc = sc;
+    public MyArray() {
+        this.sc = new Scanner(System.in);
         spawnArray(sc);
     }
 
@@ -19,7 +19,7 @@ public class MyArray {
         int size0, size1, size2;
         switch (dimension){
             case 0:
-                Main.spawnMenu(sc);
+                Main.spawnMenu();
                 break;
             case 1:
                 Object oneDimensionalArray[];

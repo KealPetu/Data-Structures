@@ -1,17 +1,17 @@
+import javax.swing.*;
 import java.util.Scanner;
 
 public class SnS {
     private Object array[];
     private int arraySize;
 
-    public SnS(Scanner sc) {
-        arrayCreation(sc);
-        showMenuOfOptions(sc);
+    public SnS() {
+        arrayCreation();
+        showMenuOfOptions();
     }
 
-    private void showMenuOfOptions(Scanner sc) {
-        System.out.print(
-                "\t||What do you wish to do?\n" +
+    private void showMenuOfOptions() {
+        String option = JOptionPane.showInputDialog("\t||What do you wish to do?\n" +
                 "1. Enter an integer\n" +
                 "2. Minor bubble sorting\n" +
                 "3. Major bubble sorting\n" +
@@ -20,57 +20,51 @@ public class SnS {
                 "6. Show Array\n" +
                 "0. Go back\n" +
                 "Option: ");
-        int option = sc.nextInt();
 
         switch (option){
-            case 0:
-                Main.spawnMenu(sc);
+            case "0":
+                Main.spawnMenu();
                 break;
-            case 1:
-                addValueToArray(sc);
-                printArray();
-                showMenuOfOptions(sc);
+            case "1":
+                addValueToArray();
+                showMenuOfOptions();
                 break;
-            case 2:
+            case "2":
                 minorBubbleSorting();
-                printArray();
-                showMenuOfOptions(sc);
+                showMenuOfOptions();
                 break;
-            case 3:
+            case "3":
                 majorBubbleSorting();
-                printArray();
-                showMenuOfOptions(sc);
+                showMenuOfOptions();
                 break;
-            case 4:
+            case "4":
                 directSelection();
-                printArray();
-                showMenuOfOptions(sc);
+                showMenuOfOptions();
                 break;
-            case 5:
-                sequentialSearch(sc);
-                showMenuOfOptions(sc);
+            case "5":
+                sequentialSearch();
+                showMenuOfOptions();
                 break;
-            case 6:
+            case "6":
                 printArray();
-                showMenuOfOptions(sc);
+                showMenuOfOptions();
                 break;
             default:
-                showMenuOfOptions(sc);
+                showMenuOfOptions();
                 break;
         }
     }
 
-    private void sequentialSearch(Scanner sc) {
-        System.out.print("What value do you wish to find? ");
-        int value2Find = sc.nextInt(),
+    private void sequentialSearch() {
+        int value2Find = Integer.parseInt(JOptionPane.showInputDialog("What value do you wish to find?")) ,
                 i = 1;
         while ((i != arraySize) && ((int)array[i] != value2Find)){
             i++;
         }
         if (i > arraySize){
-            System.out.print("Data not found");
+            JOptionPane.showMessageDialog(null, "Data not found");
         } else {
-            System.out.println("Data found at [" + i + "]");
+            JOptionPane.showMessageDialog(null, "Data found at [" + i + "]");
         }
     }
 
@@ -89,6 +83,7 @@ public class SnS {
                 array[i] = array[position];
                 array[position] = auxiliar;
             }
+            printArray();
         }
     }
 
@@ -100,16 +95,18 @@ public class SnS {
                     auxiliar = array[j];
                     array[j] = array[j + 1];
                     array[j + 1] = auxiliar;
+                    printArray();
                 }
             }
         }
     }
 
     private void printArray() {
+        String message = "";
         for (int i = 0; i < arraySize; i++) {
-            System.out.print("[" + array[i] + "] ");
+            message = message + "[" + array[i] + "] ";
         }
-        System.out.println("\n");
+        JOptionPane.showMessageDialog(null, message);
     }
 
     private void minorBubbleSorting() {
@@ -120,28 +117,25 @@ public class SnS {
                     auxiliar = array[j - 1];
                     array[j - 1] = array[j];
                     array[j] = auxiliar;
+                    printArray();
                 }
             }
         }
     }
 
-    private void addValueToArray(Scanner sc) {
-        System.out.print("Enter the value: ");
-        int value = sc.nextInt();
+    private void addValueToArray() {
+        int value = Integer.parseInt(JOptionPane.showInputDialog("Enter the value: "));
         for (int i = 0; i < arraySize; i++) {
             if (array[i] == null){
                 array[i] = value;
-                System.out.println("Item: " + value + ";Placed at: [" + i + "]");
+                JOptionPane.showMessageDialog(null, "Item: " + value + "\nPlaced at: [" + i + "]");
                 return;
-            } else {
-                System.out.println("Array is full");
             }
         }
     }
 
-    private void arrayCreation(Scanner sc) {
-        System.out.print("Enter the size of the array: ");
-        arraySize = sc.nextInt();
+    private void arrayCreation() {
+        arraySize = Integer.parseInt(JOptionPane.showInputDialog("Enter the size of the array: "));
         array = new Object[arraySize];
     }
 }
