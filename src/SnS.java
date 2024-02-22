@@ -1,7 +1,7 @@
 import javax.swing.*;
 
 public class SnS {
-    private Object array[]; // Un array de tipo Object para almacenar los elementos.
+    private Object[] arrangedArray, disarrangedArray; // Un array de tipo Object para almacenar los elementos.
                             // Utilizar Object permite almacenar cualquier tipo de objeto.
     private int arraySize; //Un entero que almacena el tamaño del array.
 
@@ -51,8 +51,7 @@ public class SnS {
                 showMenuOfOptions();
                 break;
             case "6":
-                sequentialSearch();
-                showMenuOfOptions();
+                searchWichArray();
                 break;
             case "7":
                 printArray();
@@ -64,50 +63,68 @@ public class SnS {
         }
     }
 
+    private void searchWichArray() {
+        String array2Choose = JOptionPane.showInputDialog("Wich array do you want to search?\n1. Arranged Array\n2. Disarranged Array\n0. Go back");
+        switch (array2Choose){
+            case "0":
+                showMenuOfOptions();
+                break;
+            case "1":
+                sequentialSearch(arrangedArray);
+                searchWichArray();
+                break;
+            case "2":
+                sequentialSearch(disarrangedArray);
+                searchWichArray();
+                break;
+            default:
+                searchWichArray();
+                break;
+        }
+    }
+
     private void insertionSort() {  //El algoritmo de ordenación por inserción funciona construyendo una secuencia ordenada
                                     // de elementos uno a uno tomando elementos de la lista y colocándolos en la posición correcta.
         for (int i = 1; i < arraySize; i++) {
-            Object auxiliar = array[i];
+            Object auxiliar = arrangedArray[i];
             int j = i - 1;
 
-            while (j >= 0 && (int)array[j] > (int)auxiliar) {
-                array[j + 1] = array[j];
+            while (j >= 0 && (int) arrangedArray[j] > (int)auxiliar) {
+                arrangedArray[j + 1] = arrangedArray[j];
                 j = j - 1;
             }
-            array[j + 1] = auxiliar;
+            arrangedArray[j + 1] = auxiliar;
             printArray();
         }
     }
 
-    private void sequentialSearch() {   //Realiza una búsqueda secuencial en el array para encontrar
+    private void sequentialSearch(Object[] array) {   //Realiza una búsqueda secuencial en el array para encontrar
                                         //un valor ingresado por el usuario.
-        int value2Find = Integer.parseInt(JOptionPane.showInputDialog("What value do you wish to find?")) ,
-                i = 1;
-        while ((i <= arraySize) && ((int)array[i] != value2Find)){
-            i++;
+        int value2Find = Integer.parseInt(JOptionPane.showInputDialog("What value do you wish to find?"));
+        for (int i = 0; i < arraySize; i++) {
+            if (value2Find == (int) array[i]){
+                JOptionPane.showMessageDialog(null, "Value " + array[i] + " found at [" + i + "]");
+                return;
+            }
         }
-        if (i > arraySize){
-            JOptionPane.showMessageDialog(null, "Data not found");
-        } else {
-            JOptionPane.showMessageDialog(null, "Data found at [" + i + "]");
-        }
+        JOptionPane.showMessageDialog(null, "Value " + value2Find + " not found");
     }
 
     private void directSelection() {    //Implementa el algoritmo de selección directa (direct selection).
                                         // Ordena el array de manera ascendente.
         for (int i = 1; i < arraySize - 1; i++) {
-            int least = (int)array[i],
+            int least = (int) arrangedArray[i],
                     position = i;
             for (int j = i + 1; j != arraySize; j++) {
-                if ((int)array[j] < least){
-                    least = (int)array[j];
+                if ((int) arrangedArray[j] < least){
+                    least = (int) arrangedArray[j];
                     position = j;
                 }
             }
             if (position != i){
-                Object auxiliar = array[i];
-                array[i] = array[position];
-                array[position] = auxiliar;
+                Object auxiliar = arrangedArray[i];
+                arrangedArray[i] = arrangedArray[position];
+                arrangedArray[position] = auxiliar;
             }
             printArray();
         }
@@ -118,10 +135,10 @@ public class SnS {
         Object auxiliar;
         for (int i = 0; i != arraySize - 1; i++) {
             for (int j = 0; j != arraySize - 1; j++) {
-                if ((int)array[j] > (int)array[j + 1]){
-                    auxiliar = array[j];
-                    array[j] = array[j + 1];
-                    array[j + 1] = auxiliar;
+                if ((int) arrangedArray[j] > (int) arrangedArray[j + 1]){
+                    auxiliar = arrangedArray[j];
+                    arrangedArray[j] = arrangedArray[j + 1];
+                    arrangedArray[j + 1] = auxiliar;
                     printArray();
                 }
             }
@@ -129,9 +146,13 @@ public class SnS {
     }
 
     private void printArray() { //Imprime el contenido del array en una ventana de mensaje.
-        String message = "";
+        String message = "Arranged array: ";
         for (int i = 0; i < arraySize; i++) {
-            message = message + "[" + array[i] + "] ";
+            message = message + "[" + arrangedArray[i] + "] ";
+        }
+        message = message + "\nDisarranged Array: ";
+        for (int i = 0; i < arraySize; i++) {
+            message = message + "[" + disarrangedArray[i] + "] ";
         }
         JOptionPane.showMessageDialog(null, message);
     }
@@ -140,10 +161,10 @@ public class SnS {
         Object auxiliar;
         for (int i = 0; i != arraySize - 1; i++) {
             for (int j = arraySize - 1; j != i; j--) {
-                if ((int)array[j] < (int)array[j - 1]){
-                    auxiliar = array[j - 1];
-                    array[j - 1] = array[j];
-                    array[j] = auxiliar;
+                if ((int) arrangedArray[j] < (int) arrangedArray[j - 1]){
+                    auxiliar = arrangedArray[j - 1];
+                    arrangedArray[j - 1] = arrangedArray[j];
+                    arrangedArray[j] = auxiliar;
                     printArray();
                 }
             }
@@ -151,10 +172,15 @@ public class SnS {
     }
 
     private void addValueToArray() {    //Permite al usuario agregar un valor al array en la primera posición disponible.
-        int value = Integer.parseInt(JOptionPane.showInputDialog("Enter the value: "));
+        int value = 0;
+        try {
+            value = Integer.parseInt(JOptionPane.showInputDialog("Enter the value: "));
+        } catch (NumberFormatException e) {
+            value = 0;
+        }
         for (int i = 0; i < arraySize; i++) {
-            if (array[i] == null){
-                array[i] = value;
+            if (disarrangedArray[i] == null){
+                disarrangedArray[i] = arrangedArray[i] = value;
                 JOptionPane.showMessageDialog(null, "Item: " + value + "\nPlaced at: [" + i + "]");
                 return;
             }
@@ -163,6 +189,7 @@ public class SnS {
 
     private void arrayCreation() {  //Solicita al usuario el tamaño del array y lo inicializa.
         arraySize = Integer.parseInt(JOptionPane.showInputDialog("Enter the size of the array: "));
-        array = new Object[arraySize];
+        disarrangedArray = new Object[arraySize];
+        arrangedArray = new Object[arraySize];
     }
 }
