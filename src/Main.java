@@ -1,3 +1,5 @@
+// @author: Kevin Penafiel
+// @date: 21/01/2024
 import javax.swing.*;
 
 public class Main {
