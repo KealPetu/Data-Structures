@@ -20,6 +20,7 @@ public class Main {
                 "5. Linked Lists\n" +
                 "6. Trees\n" +
                 "7. Sort & Search\n" +
+                "8. Hashing\n" +
                 "0. Exit\n" +
                 "Option: ");
 
@@ -33,6 +34,9 @@ public class Main {
                 break;
             case "7":
                 SnS sns = new SnS();
+                break;
+            case "8":
+                MyHash hash = new MyHash();
                 break;
             default:
                 spawnMenu();
